@@ -1,1 +1,1 @@
-# Ginifinity
+# myStudy
