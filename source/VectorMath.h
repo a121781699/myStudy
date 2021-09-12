@@ -12,9 +12,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
-#include <sys/time.h>
+//#include <sys/time.h>
 #include <time.h>
-#include <unistd.h>
+//#include <unistd.h>
 
 #define DIM 3
 #define PI 3.141592653589793238462643
@@ -326,6 +326,11 @@ typedef struct Variable {
   char *cwd, *sf;
 } Variable;
 
+typedef struct Clock {
+	double timeScale;
+	double timeUnit;
+}Clock;
+
 int findVariable(Variable *var, char *name) {
   for (int ith = 0; ith < var->nVar; ith++) {
     if (!strcmp(var->cmd[ith].cmdType, name)) return ith;
@@ -358,4 +363,6 @@ void exchange_int(int *type, int *buffer, int *oid2nid, int nAtom) {
   }
 }
 
+extern Clock _clock;
+Clock _clock;
 #endif

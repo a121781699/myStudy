@@ -11,15 +11,15 @@ public:
 
 	void update()
 	{
-	    vecScaleAdd(x,x,0.001,v);
-	    vecScaleAdd(v,v,0.001,f);
+		vecScaleAdd(x, x, _clock.timeScale, v);
+		vecScaleAdd(v, v, _clock.timeScale, f);
 	}
 public:
 	static double meanDiameterScale;
 	//properties of particle
-	double id;
-	double type;
-	double density;
+	int id;
+	int type;
+	int density;
 	double3 x;   //position
 	double3 v;   //velocity
 	double3 f;   //force
