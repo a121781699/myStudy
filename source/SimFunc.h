@@ -19,35 +19,35 @@ void readCmdInfo(Box **box, Particle **particle, char *filename)
          fgets(buff,256,fp);
 
      *box = new Box;
-     fscanf(fp,"%d", &(*box)->nAtoms); fgets(buff,256,fp);
+     fscanf(fp, "%d", &(*box)->nAtoms); fgets(buff,256,fp);
      *particle = new Particle[(*box)->nAtoms];
 
      //size of box
      for(int i=0;i<9;++i)
          fgets(buff,256,fp);
-     
+
      for(int i=0;i<(*box)->nAtoms;++i)
      {
-	 fscanf(fp,"%d",&particle[i]->id);   fgetc(fp);
-         fscanf(fp,"%d",&particle[i]->type); fgetc(fp);
-         fscanf(fp,"%.17f",&particle[i]->DiameterScale); fgetc(fp);
-         fscanf(fp,"%d",&particle[i]->density); fgetc(fp);
-         fscanf(fp,"%.17f",&particle[i]->x.x);  fgetc(fp);
-         fscanf(fp,"%.17f",&particle[i]->x.y);  fgetc(fp);
-         fscanf(fp,"%.17f",&particle[i]->x.z);  fgetc(fp);
-         fscanf(fp,"%lf",&particle[i]->xImage.x); fgetc(fp);
-         fscanf(fp,"%lf",&particle[i]->xImage.y); fgetc(fp);
-         fscanf(fp,"%lf",&particle[i]->xImage.z); fgetc(fp);
+	     fscanf(fp,"%d",&(*particle)[i].id);   fgetc(fp);
+         fscanf(fp,"%d",&(*particle)[i].type); fgetc(fp);
+         fscanf(fp,"%lf",&(*particle)[i].DiameterScale); fgetc(fp);
+         fscanf(fp,"%d",&(*particle)[i].density); fgetc(fp);
+         fscanf(fp,"%lf",&(*particle)[i].x.x);  fgetc(fp);
+         fscanf(fp,"%lf",&(*particle)[i].x.y);  fgetc(fp);
+         fscanf(fp,"%lf",&(*particle)[i].x.z);  fgetc(fp);
+         fscanf(fp,"%lf",&(*particle)[i].xImage.x); fgetc(fp);
+         fscanf(fp,"%lf",&(*particle)[i].xImage.y); fgetc(fp);
+         fscanf(fp,"%lf",&(*particle)[i].xImage.z); fgetc(fp);
      }
       
      Particle::meanDiameterScale=0.0;
      for(int i=0;i<(*box)->nAtoms;++i)
 	  Particle::meanDiameterScale+=
-		  (particle[i]->DiameterScale/(*box)->nAtoms);
+		  ((*particle)[i].DiameterScale/(*box)->nAtoms);
 
      for(int i=0;i<(*box)->nAtoms;++i)
-	  particle[i]->DiameterScale=
-		  particle[i]->DiameterScale/Particle::meanDiameterScale;
+		 (*particle)[i].DiameterScale=
+		  (*particle)[i].DiameterScale/Particle::meanDiameterScale;
 }
 
 void safe_exit()
