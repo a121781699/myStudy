@@ -79,12 +79,12 @@ typedef struct Hvoigt6 {
     vecDot(sNorm, vecA, vecA); \
     sNorm = sqrt(sNorm);       \
   }
-#define vecUnit(vUnit, vecA)          \
+/*#define vecUnit(vUnit, vecA)          \
   {                                   \
     double len = 0.0;                 \
     vecNorm(len, vecA);               \
     vecScale(vUnit, 1.0 / len, vecA); \
-  }
+  }*/
 #define vecHvoigtMulVec(vHmV, H, vecA)                      \
   {                                                         \
     vHmV.x = H.h0 * vecA.x + H.h5 * vecA.y + H.h4 * vecA.z; \
@@ -320,10 +320,7 @@ typedef struct cmdArg {
 } cmdArg;
 
 typedef struct Variable {
-  int nVar;
-  cmdArg *cmd;
-
-  char *cwd, *sf;
+	double epsilon;
 } Variable;
 
 typedef struct Clock {
@@ -331,12 +328,12 @@ typedef struct Clock {
 	double timeUnit;
 }Clock;
 
-int findVariable(Variable *var, char *name) {
+/*int findVariable(Variable *var, char *name) {
   for (int ith = 0; ith < var->nVar; ith++) {
     if (!strcmp(var->cmd[ith].cmdType, name)) return ith;
   }
   return -1;
-}
+}*/
 
 void exchange_double3(double3 *xyz, double3 *buffer, int *oid2nid, int nAtom) {
   for (int oid = 0; oid < nAtom; oid++) {
@@ -364,5 +361,7 @@ void exchange_int(int *type, int *buffer, int *oid2nid, int nAtom) {
 }
 
 extern Clock _clock;
+extern Variable var;
 Clock _clock;
+Variable var;
 #endif

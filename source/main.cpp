@@ -1,5 +1,3 @@
-#include<time.h>
-
 #include"VectorMath.h"
 #include"Particle.h"
 #include"Box.h"
@@ -11,6 +9,8 @@ void foo()
     for(int i=0;i<box->nAtoms;++i) 
 	fprintf(stdout,"%lf %lf %lf\n",
 		particle[i].x.x,particle[i].x.y,particle[i].x.z);
+
+	Particle::calcForce(calcForcei, particle, box->nAtoms);
 }
 
 int main(int argc, char *argv[])

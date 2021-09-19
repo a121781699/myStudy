@@ -5,6 +5,14 @@
 #include"Particle.h"
 #include"Box.h"
 
+void defVar()
+{
+	_clock.timeUnit = 1.0;
+	_clock.timeScale = 0.005*_clock.timeUnit;
+
+	var.epsilon = 1.0;
+}
+
 void readCmdInfo(Box **box, Particle **particle, char *filename)
 {
      FILE *fp=fopen(filename,"r");
@@ -48,6 +56,8 @@ void readCmdInfo(Box **box, Particle **particle, char *filename)
      for(int i=0;i<(*box)->nAtoms;++i)
 		 (*particle)[i].DiameterScale=
 		  (*particle)[i].DiameterScale/Particle::meanDiameterScale;
+
+	 defVar();
 }
 
 void safe_exit()
