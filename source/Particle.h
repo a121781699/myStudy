@@ -33,6 +33,7 @@ public:
 public:
 	static double meanDiameterScale;
 	static void calcForce(void(*func)(double3&, double const, double3, double const), Particle *particle, int nAtoms);
+	static void eulerInteger(Particle *particle, int nAtoms);
 	//properties of particle
 	int id;
 	int type;
@@ -72,5 +73,11 @@ void Particle::calcForce(void(*func)(double3&,double const,double3,double const)
 		}
 		particle[i].f = fsum;
 	}
+}
+
+void Particle::eulerInteger(Particle *particle, int nAtoms)
+{
+	for (int i = 0; i < nAtoms; ++i)
+		particle[i].update();
 }
 #endif
