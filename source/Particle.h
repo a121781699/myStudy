@@ -65,8 +65,11 @@ void Particle::calcForce(void(*func)(double3&,double const,double3,double const)
 		for (int j = 0; j < nAtoms; ++j)
 		{
 			double3 f, x;
+			double x2;
 			vecSub(x, particle[j].x, particle[i].x);
+			vecDot(x2, x, x);
 			double sigma = (particle[i].DiameterScale + particle[j].DiameterScale)*Particle::meanDiameterScale / 2.0;
+			if (sigma*sigma <= x2) continue;
 			func(f, -2 * var.epsilon / sigma, x, sigma);
 			vecAdd(fsum, fsum, f);
 			//vecSub(particle[i].f, particle[i].f, f);
