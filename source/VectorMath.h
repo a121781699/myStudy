@@ -79,12 +79,12 @@ typedef struct Hvoigt6 {
     vecDot(sNorm, vecA, vecA); \
     sNorm = sqrt(sNorm);       \
   }
-/*#define vecUnit(vUnit, vecA)          \
+#define vecUnit(vUnit, vecA)          \
   {                                   \
     double len = 0.0;                 \
     vecNorm(len, vecA);               \
     vecScale(vUnit, 1.0 / len, vecA); \
-  }*/
+  }
 #define vecHvoigtMulVec(vHmV, H, vecA)                      \
   {                                                         \
     vHmV.x = H.h0 * vecA.x + H.h5 * vecA.y + H.h4 * vecA.z; \

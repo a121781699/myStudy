@@ -48,6 +48,11 @@ void readCmdInfo(Box **box, Particle **particle, char *filename)
          fscanf(fp,"%lf",&(*particle)[i].xImage.z); fgetc(fp);
      }
       
+	 for (int i = 0; i < (*box)->nAtoms; ++i)
+		 (*particle)[i].v = { 0,0,0 };
+	 for (int i = 0; i < (*box)->nAtoms; ++i)
+		 (*particle)[i].f = { 0,0,0 };
+
      Particle::meanDiameterScale=0.0;
      for(int i=0;i<(*box)->nAtoms;++i)
 	  Particle::meanDiameterScale+=
