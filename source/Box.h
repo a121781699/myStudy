@@ -4,9 +4,6 @@
 #include"VectorMath.h"
 #include"Particle.h"
 
-#include"VectorMath.h"
-#include"Particle.h"
-
 class Box
 {
 public:
@@ -51,9 +48,10 @@ double Box::getE()
 			double3 x;
 			double x_norm, factor;
 			vecSub(x, particle[i].x, particle[j].x);
+			periodicBoundaryCondition(x, Length);
 			vecNorm(x_norm, x);
 			if (x_norm >= sigma) continue;
-			factor = var.epsilon / 2.0;
+			factor = var._epsilon / 2.0;
 			e += factor * pow((1.0 - x_norm / sigma), 2);
 		}
 		E += e / 2.0;

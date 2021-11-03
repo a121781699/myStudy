@@ -38,7 +38,7 @@ typedef struct int2 {
   int x, y;
 } int2;
 typedef struct Hvoigt6 {
-  double h0, h1, h2, h3, h4, h5;  // xx, yy, zz, yz, xz, xy
+	double xx, yy, zz, yz, xz, xy;  // xx, yy, zz, yz, xz, xy
 } Hvoigt6;
 
 #define vecAdd(vSum, vecA, vecB) \
@@ -117,6 +117,18 @@ typedef struct Hvoigt6 {
       nRij.x += box->boxHvoigt.h0;              \
   }
 #endif
+
+extern Hvoigt6 Length;
+Hvoigt6 Length = { 1.0,1.0,1.0,0,0,0 };
+#define periodicBoundaryCondition(x,Length)         \
+ {                                                  \
+	if(x.x>(Length.xx/2.0))                         \
+		x.x = x.x - Length.xx;                      \
+	if(x.y>(Length.yy/2.0))                         \
+		x.y = x.y - Length.yy;                      \
+	if(x.z>(Length.zz/2.0))                         \
+		x.z = x.z - Length.zz;                      \
+ }
 
 #ifdef __triBox__
 #define PBC(nRij, box)                              \
@@ -268,7 +280,7 @@ double rndStdNorm() {
 
   return x;
 }
-Hvoigt6 make_Hvoigt6(double h0, double h1, double h2, double h3, double h4,
+/*Hvoigt6 make_Hvoigt6(double h0, double h1, double h2, double h3, double h4,
                      double h5) {
   Hvoigt6 tmp;
   tmp.h0 = h0;
@@ -278,7 +290,7 @@ Hvoigt6 make_Hvoigt6(double h0, double h1, double h2, double h3, double h4,
   tmp.h4 = h4;
   tmp.h5 = h5;
   return tmp;
-}
+}*/
 double3 make_double3(double x, double y, double z) {
   double3 tmp;
   tmp.x = x;
@@ -320,7 +332,7 @@ typedef struct cmdArg {
 } cmdArg;
 
 typedef struct Variable {
-	double epsilon;
+	double _epsilon;
 } Variable;
 
 typedef struct Clock {

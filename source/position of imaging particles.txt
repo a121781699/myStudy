@@ -1,0 +1,4 @@
+若粒子i的位置矢量xi.
+考虑x方向,若
+xi.x>box.x/2 则 xi.x=xi.x-box.x
+y,z方向同理

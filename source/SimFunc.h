@@ -10,7 +10,11 @@ void defVar()
 	_clock.timeUnit = 1.0;
 	_clock.timeScale = 0.005*_clock.timeUnit;
 
-	var.epsilon = 1.0;
+	var._epsilon = 1.0;
+
+	box->Length.xx = Length.xx;
+	box->Length.yy = Length.yy;
+	box->Length.zz = Length.zz;
 }
 
 void readCmdInfo(Box **box, Particle **particle, char *filename)
