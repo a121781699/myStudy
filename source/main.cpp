@@ -17,6 +17,7 @@ void foo()
 	for (int i = 0; i < box->nAtoms; ++i)
 		fprintf(stdout, "%lf %lf %lf\n",
 			particle[i].f.x, particle[i].f.y, particle[i].f.z);
+	fprintf(stdout, "energy of sys: %lf\n", box->getE());
 }
 
 int main(int argc, char *argv[])

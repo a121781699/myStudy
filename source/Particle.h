@@ -15,7 +15,8 @@ void calcForcei(double3& f, double const prefactor, double const x, double3 cons
 	vecUnit(vec_unit, vec);
 	vecScale(f, prefactor*(1 - x), vec_unit);
 }
-
+extern bool IsCalcuE;
+bool IsCalcuE = false;
 
 class Particle
 {
@@ -83,5 +84,6 @@ void Particle::eulerInteger(Particle *particle, int nAtoms)
 {
 	for (int i = 0; i < nAtoms; ++i)
 		particle[i].update();
+	IsCalcuE = false;
 }
 #endif
