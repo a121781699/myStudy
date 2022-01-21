@@ -7,7 +7,7 @@
 class Box
 {
 public:
-	Box() = default;
+	Box()=default;
 	void initialize();
 	void setBasicInfo();
 	void inflate_volume(double target_volFrac);
@@ -16,48 +16,26 @@ public:
 	void read_positions(const char* file, int ignore_line);
 	void record_positions(const char* file);
 
-	double getE();
-	~Box() = default;
+	~Box()=default;
 public:
 	int nAtoms;
 	//box parameter
-	Hvoigt6 Length;
-	double boxVolume;
-	double epsilon;
-
 	double3 boxLo;
 	double3 boxHi;
-	Hvoigt6 invLength;
 
-	double E;
+	Hvoigt6 Length;  
+	double boxVolume;
+	double epsilon;
+	Hvoigt6 invLength;  
 };
 extern Box *box;
 Box *box = NULL;
 
-double Box::getE()
+void defVar()
 {
-	if (IsCalcuE) return E;
-	E = 0;
-	for (int i = 0; i < nAtoms; ++i)
-	{
-		double e = 0;
-		for (int j = 0; j < nAtoms; ++j)
-		{
-			if (j == i) continue;
-			double sigma = (particle[i].DiameterScale + particle[j].DiameterScale)*Particle::meanDiameterScale / 2.0;
-			double3 x;
-			double x_norm, factor;
-			vecSub(x, particle[i].x, particle[j].x);
-			periodicBoundaryCondition(x, Length);
-			vecNorm(x_norm, x);
-			if (x_norm >= sigma) continue;
-			factor = var._epsilon / 2.0;
-			e += factor * pow((1.0 - x_norm / sigma), 2);
-		}
-		E += e / 2.0;
-	}
-	IsCalcuE = true;
-	//E = 1.0;
-	return E;
+	_clock.timeUnit = 1.0;
+	_clock.timeScale = 0.005*_clock.timeUnit;
+
+	var.epsilon = 1.0;
 }
 #endif

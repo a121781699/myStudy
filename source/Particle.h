@@ -3,15 +3,6 @@
 
 #include"VectorMath.h"
 
-#define adjustPositionofSinglePaticle(x,Length)     \
-{													\
-	if(x.x>(Length.xx/2.0))                         \
-		x.x = x.x - Length.xx;                      \
-	if(x.y>(Length.yy/2.0))                         \
-		x.y = x.y - Length.yy;                      \
-	if(x.z>(Length.zz/2.0))                         \
-		x.z = x.z - Length.zz;                      \
-}
 #define calcFi(f, prefactor, x, vec)     \
 {                                          \
     vecScale();                            \
@@ -24,8 +15,7 @@ void calcForcei(double3& f, double const prefactor, double const x, double3 cons
 	vecUnit(vec_unit, vec);
 	vecScale(f, prefactor*(1 - x), vec_unit);
 }
-extern bool IsCalcuE;
-bool IsCalcuE = false;
+
 
 class Particle
 {
@@ -38,8 +28,6 @@ public:
 	{
 		vecScaleAdd(x, x, _clock.timeScale, v);
 		vecScaleAdd(v, v, _clock.timeScale, f);
-		
-		adjustPositionofSinglePaticle(x, Length);
 	}
 public:
 	static double meanDiameterScale;
@@ -79,11 +67,10 @@ void Particle::calcForce(void(*func)(double3&,double const,double const,double3 
 		{
 			if (j == i) continue;
 			vecSub(x, particle[j].x, particle[i].x);
-			periodicBoundaryCondition(x, Length);
 			vecNorm(xNorm, x);
 			double sigma = (particle[i].DiameterScale + particle[j].DiameterScale)*Particle::meanDiameterScale / 2.0;
 			if (sigma <= xNorm) continue;
-			double factor = -2 * var._epsilon / sigma;
+			double factor = -2 * var.epsilon / sigma;
 			func(f, factor, 1 - xNorm / sigma, x);
 			vecAdd(fsum, fsum, f);
 			//vecSub(particle[i].f, particle[i].f, f);
@@ -96,6 +83,5 @@ void Particle::eulerInteger(Particle *particle, int nAtoms)
 {
 	for (int i = 0; i < nAtoms; ++i)
 		particle[i].update();
-	IsCalcuE = false;
 }
 #endif

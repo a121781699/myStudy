@@ -5,18 +5,6 @@
 #include"Particle.h"
 #include"Box.h"
 
-void defVar()
-{
-	_clock.timeUnit = 1.0;
-	_clock.timeScale = 0.005*_clock.timeUnit;
-
-	var._epsilon = 1.0;
-
-	box->Length.xx = Length.xx;
-	box->Length.yy = Length.yy;
-	box->Length.zz = Length.zz;
-}
-
 void readCmdInfo(Box **box, Particle **particle, char *filename)
 {
      FILE *fp=fopen(filename,"r");
@@ -34,10 +22,18 @@ void readCmdInfo(Box **box, Particle **particle, char *filename)
      fscanf(fp, "%d", &(*box)->nAtoms); fgets(buff,256,fp);
      *particle = new Particle[(*box)->nAtoms];
 
-     //size of box
-     for(int i=0;i<9;++i)
-         fgets(buff,256,fp);
+	 for (int i = 0; i < 2; ++i)
+		 fgets(buff, 256, fp);
 
+	 //size of box
+	 fscanf(fp, "lf", &(*box)->boxLo.x); fscanf(fp, "lf", &(*box)->boxHi.x); fgets(buff, 256, fp);
+	 fscanf(fp, "lf", &(*box)->boxLo.y); fscanf(fp, "lf", &(*box)->boxHi.y); fgets(buff, 256, fp);
+	 fscanf(fp, "lf", &(*box)->boxLo.z); fscanf(fp, "lf", &(*box)->boxHi.z); fgets(buff, 256, fp);
+
+	 for (int i = 0; i < 4; ++i)
+		 fgets(buff, 256, fp);
+
+	 //particles
      for(int i=0;i<(*box)->nAtoms;++i)
      {
 	     fscanf(fp,"%d",&(*particle)[i].id);   fgetc(fp);
